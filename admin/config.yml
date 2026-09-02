@@ -21,8 +21,8 @@ backend:
 media_folder: "img/uploads"
 public_folder: "/img/uploads"
 
-site_url: "https://YOUR-SITE.netlify.app"
-display_url: "https://YOUR-SITE.netlify.app"
+site_url: "https://shieldtechweb.netlify.app"
+display_url: "https://shieldtechweb.netlify.app"
 logo_url: "/img/logo/logo.png"
 
 collections:
