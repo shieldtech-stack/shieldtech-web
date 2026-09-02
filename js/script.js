@@ -110,7 +110,10 @@ document.addEventListener('DOMContentLoaded', function () {
           return r.json();
         })
         .then(function (data) {
-          return (data && data.products) || [];
+          // JSONBin wraps: { record: { products: [...] } }
+          // Local JSON:   { products: [...] }
+          var record = data.record || data;
+          return (record && record.products) || [];
         });
     }
 

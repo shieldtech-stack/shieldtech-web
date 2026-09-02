@@ -133,7 +133,8 @@
       fetch(BIN_URL)
         .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
         .then(function (data) {
-          products = (data && data.products) || [];
+          var record = data.record || data;
+          products = (record && record.products) || [];
           renderList();
           showStatus('Loaded ' + products.length + ' product(s).', 'ok');
         })
