@@ -101,19 +101,45 @@ document.addEventListener('DOMContentLoaded', function () {
     let allProducts = [];
     const status = document.getElementById('product-status');
 
-    fetch('content/shop.json')
-      .then(function (r) {
-        if (!r.ok) throw new Error('HTTP ' + r.status);
-        return r.json();
-      })
-      .then(function (data) {
-        allProducts = (data && data.products) || [];
-        renderProducts('all');
-        if (status) status.textContent = '';
-      })
-      .catch(function () {
-        if (status) status.textContent = 'Unable to load products. Please check back shortly.';
-      });
+    // Prefer the live public JSONBin bin (no key, no Netlify rebuild on
+    // edits). Fall back to the local shop.json if unavailable.
+    function loadFrom(url) {
+      return fetch(url)
+        .then(function (r) {
+          if (!r.ok) throw new Error('HTTP ' + r.status);
+          return r.json();
+        })
+        .then(function (data) {
+          return (data && data.products) || [];
+        });
+    }
+
+    var cfg = (window.SHIELDTECH_DATA || {}).binId;
+    var binUrl = cfg ? ('https://api.jsonbin.io/v3/b/' + cfg + '/latest') : null;
+
+    function renderAll(list) {
+      allProducts = list;
+      renderProducts('all');
+      if (status) status.textContent = '';
+    }
+
+    if (binUrl) {
+      loadFrom(binUrl)
+        .then(renderAll)
+        .catch(function () {
+          return loadFrom((window.SHIELDTECH_DATA || {}).fallbackUrl || 'content/shop.json')
+            .then(renderAll)
+            .catch(function () {
+              if (status) status.textContent = 'Unable to load products. Please check back shortly.';
+            });
+        });
+    } else {
+      loadFrom((window.SHIELDTECH_DATA || {}).fallbackUrl || 'content/shop.json')
+        .then(renderAll)
+        .catch(function () {
+          if (status) status.textContent = 'Unable to load products. Please check back shortly.';
+        });
+    }
 
     function renderProducts(filter) {
       if (!productGrid) return;

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>SHIELDTECH — Inventory Editor</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body { font-family: 'Poppins', sans-serif; background: var(--off-white); color: var(--gray-700); padding: 24px; }
+    .wrap { max-width: 960px; margin: 0 auto; }
+    h1 { color: var(--navy); }
+    .card { background: #fff; border-radius: 12px; padding: 18px; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(280px,1fr)); gap: 16px; }
+    .field { display: flex; flex-direction: column; gap: 4px; margin-bottom: 10px; }
+    .field label { font-size: 12px; font-weight: 600; color: var(--gray-500); text-transform: uppercase; }
+    .field input, .field select, .field textarea {
+      border: 1px solid #ddd; border-radius: 8px; padding: 8px 10px; font: inherit; font-size: 14px;
+    }
+    .row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    .btn { cursor: pointer; }
+    .btn-danger { background: #c0392b; color: #fff; }
+    .btn-ghost { background: transparent; color: var(--navy); border: 1px solid var(--navy); }
+    .status { padding: 8px 12px; border-radius: 8px; margin: 10px 0; font-size: 14px; }
+    .status.ok { background: #d4edda; color: #155724; }
+    .status.err { background: #f8d7da; color: #721c24; }
+    .status.info { background: #d1ecf1; color: #0c5460; }
+    .key-box { background:#fff3cd; border:1px solid #ffeeba; padding:12px 14px; border-radius:8px; margin-bottom:16px; font-size:13px; }
+    .key-box input { width: 100%; max-width: 420px; margin-top:6px; font-family: monospace; }
+    .hide { display: none; }
+    .empty { text-align:center; color: var(--gray-500); padding: 30px 0; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>SHIELDTECH — Inventory Editor</h1>
+    <p>Add, edit, remove, or update stock for your shop. Changes appear to
+       all visitors <strong>immediately</strong> (a save writes straight to
+       the hosted JSON store — no site rebuild, no limit on edits).</p>
+
+    <div id="gate" class="card">
+      <h3>Enter admin PIN</h3>
+      <p style="font-size:13px;">This protects the editor from unauthorised visitors.
+         Enter the PIN you agreed with your assistant.</p>
+      <div class="row">
+        <input type="password" id="pin-input" placeholder="Admin PIN" style="max-width:200px;">
+        <button class="btn btn-cyan" id="pin-btn" type="button">Unlock</button>
+      </div>
+    </div>
+
+    <div id="panel" class="hide">
+
+      <div class="key-box">
+        <strong>JSONBin Master Key</strong>
+        <p style="margin:4px 0;font-size:12px;">Enter your JSONBin X-Master-Key to enable saving.
+           It is used only in this browser session and is <em>never</em> saved to a file or the site.
+           Leave blank if you only want to view products.</p>
+        <input type="password" id="master-key" placeholder="Paste X-Master-Key here (read-only updates shown without it)" disabled>
+      </div>
+
+      <div id="status" class="status info hide"></div>
+
+      <div class="row" style="margin-bottom:16px;">
+        <button class="btn btn-cyan" id="add-btn" type="button">+ Add product</button>
+        <button class="btn btn-navy" id="save-btn" type="button">💾 Save all changes</button>
+        <button class="btn btn-ghost" id="reload-btn" type="button">↻ Reload from store</button>
+      </div>
+
+      <div id="list"></div>
+    </div>
+  </div>
+
+  <script src="js/shop-data.js"></script>
+  <script>
+  (function () {
+    var cfg = window.SHIELDTECH_DATA || {};
+    var BIN_ID = cfg.binId;
+    var BIN_URL = BIN_ID ? ('https://api.jsonbin.io/v3/b/' + BIN_ID + '/latest') : null;
+
+    var ADMIN_PIN = 'shieldtech2026'; // change this to your own secret PIN
+
+    var products = [];
+
+    var gate = document.getElementById('gate');
+    var panel = document.getElementById('panel');
+    var pinInput = document.getElementById('pin-input');
+    var pinBtn = document.getElementById('pin-btn');
+    var list = document.getElementById('list');
+    var statusEl = document.getElementById('status');
+    var masterKey = document.getElementById('master-key');
+    var addBtn = document.getElementById('add-btn');
+    var saveBtn = document.getElementById('save-btn');
+    var reloadBtn = document.getElementById('reload-btn');
+
+    function showStatus(msg, type) {
+      statusEl.textContent = msg;
+      statusEl.className = 'status ' + (type || 'info');
+      statusEl.classList.remove('hide');
+    }
+    function clearStatus() { statusEl.classList.add('hide'); }
+
+    function esc(s) {
+      return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;')
+        .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    function catLabels() { return ['keyboards','storage','power','audio']; }
+    function catLabel(c) { return (c || '').replace(/-/g,' ').replace(/\b\w/g,function(m){return m.toUpperCase();}); }
+
+    // ---- PIN gate ----
+    function unlock() {
+      if (pinInput.value.trim() === ADMIN_PIN) {
+        gate.classList.add('hide');
+        panel.classList.remove('hide');
+        masterKey.disabled = false;
+        loadProducts();
+      } else {
+        showStatus('Incorrect PIN.', 'err');
+      }
+    }
+    pinBtn.addEventListener('click', unlock);
+    pinInput.addEventListener('keydown', function (e) { if (e.key === 'Enter') unlock(); });
+
+    // ---- Load ----
+    function loadProducts() {
+      if (!BIN_URL) {
+        showStatus('No JSONBin bin configured yet. Set binId in js/shop-data.js.', 'err');
+        return;
+      }
+      showStatus('Loading products…', 'info');
+      fetch(BIN_URL)
+        .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+        .then(function (data) {
+          products = (data && data.products) || [];
+          renderList();
+          showStatus('Loaded ' + products.length + ' product(s).', 'ok');
+        })
+        .catch(function (e) {
+          showStatus('Could not load products: ' + e.message, 'err');
+        });
+    }
+    reloadBtn.addEventListener('click', loadProducts);
+
+    // ---- Render ----
+    function renderList() {
+      list.innerHTML = '';
+      if (!products.length) {
+        list.innerHTML = '<div class="empty">No products. Click "Add product" to create one.</div>';
+        return;
+      }
+      products.forEach(function (p, i) {
+        var card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML =
+          '<div class="row" style="justify-content:space-between;">' +
+            '<h3 style="margin:0;color:var(--navy);">Product #' + (i + 1) + '</h3>' +
+            '<button type="button" class="btn btn-danger" data-del="' + i + '">Remove</button>' +
+          '</div>' +
+          '<div class="grid">' +
+            '<div class="field"><label>Name</label><input data-k="name" value="' + esc(p.name) + '"></div>' +
+            '<div class="field"><label>Slug (no spaces)</label><input data-k="slug" value="' + esc(p.slug) + '"></div>' +
+          '</div>' +
+          '<div class="grid">' +
+            '<div class="field"><label>Category</label><select data-k="category">' + categoryOptions(p.category) + '</select></div>' +
+            '<div class="field"><label>Price</label><input data-k="price" value="' + esc(p.price) + '"></div>' +
+            '<div class="field"><label>Status</label><select data-k="stock">' +
+              '<option value="in-stock"' + (p.stock === 'in-stock' ? ' selected' : '') + '>In stock</option>' +
+              '<option value="out-of-stock"' + (p.stock !== 'in-stock' ? ' selected' : '') + '>Out of stock</option>' +
+            '</select></div>' +
+          '</div>' +
+          '<div class="field"><label>Image URL (optional)</label><input data-k="image" value="' + esc(p.image) + '"></div>' +
+          '<div class="field"><label>Description</label><textarea data-k="description" rows="2">' + esc(p.description) + '</textarea></div>';
+
+        card.querySelector('[data-del]').addEventListener('click', function () {
+          products.splice(i, 1);
+          renderList();
+        });
+        card.querySelectorAll('[data-k]').forEach(function (el) {
+          el.addEventListener('input', function () {
+            var key = el.getAttribute('data-k');
+            products[i][key] = key === 'description' ? el.value : el.value;
+          });
+        });
+        list.appendChild(card);
+      });
+    }
+
+    function categoryOptions(selected) {
+      return catLabels().map(function (c) {
+        var s = String(selected || '');
+        var match = s === c ? ' selected' : '';
+        return '<option value="' + c + '"' + match + '>' + catLabel(c) + '</option>';
+      }).join('');
+    }
+
+    addBtn.addEventListener('click', function () {
+      products.push({ name:'', slug:'', category:'keyboards', price:'', stock:'in-stock', image:'', description:'' });
+      renderList();
+    });
+
+    // ---- Save ----
+    saveBtn.addEventListener('click', function () {
+      var key = masterKey.value.trim();
+      if (!key) { showStatus('Enter your JSONBin master key to save.', 'err'); return; }
+      if (!BIN_ID) { showStatus('No bin ID configured.', 'err'); return; }
+
+      // Keep only products with a name (ignore blank filler rows).
+      var payload = { products: products.filter(function (p) { return (p.name || '').trim() !== ''; }) };
+
+      showStatus('Saving…', 'info');
+      fetch('https://api.jsonbin.io/v3/b/' + BIN_ID, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Master-Key': key
+        },
+        body: JSON.stringify(payload)
+      })
+      .then(function (r) {
+        if (!r.ok) throw new Error('HTTP ' + r.status + ' — check your key.');
+        return r.json();
+      })
+      .then(function () {
+        products = payload.products.slice();
+        renderList();
+        showStatus('Saved successfully. Visitors will see updates immediately.', 'ok');
+      })
+      .catch(function (e) {
+        showStatus('Save failed: ' + e.message, 'err');
+      });
+    });
+  })();
+  </script>
+</body>
+</html>

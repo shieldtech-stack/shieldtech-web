@@ -6,18 +6,35 @@
   <meta name="robots" content="noindex, nofollow">
   <title>SHIELDTECH — Admin</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <meta http-equiv="refresh" content="0; url=admin/index.html">
   <link rel="stylesheet" href="css/styles.css">
   <style>
-    body { font-family: 'Poppins', sans-serif; background: var(--off-white); display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; color: var(--gray-700); }
-    .box { text-align: center; }
-    .box a { color: var(--navy); font-weight: 600; }
+    body { font-family: 'Poppins', sans-serif; background: var(--off-white); display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; color: var(--gray-700); }
+    .box { background: #fff; border-radius: 14px; padding: 36px; max-width: 460px; width: 90%; box-shadow: 0 6px 24px rgba(0,0,0,.08); }
+    h1 { color: var(--navy); margin-top: 0; }
+    .opt { display: block; text-align: left; width: 100%; padding: 16px; margin: 12px 0; border: 1px solid #ddd; border-radius: 10px; background: #fafafa; color: var(--gray-700); text-decoration: none; box-sizing: border-box; }
+    .opt:hover { border-color: var(--cyan); }
+    .opt .t { font-weight:700; color: var(--navy); display:block; margin-bottom:4px; }
+    .opt .d { font-size: 13px; }
+    .badge { display:inline-block; background: var(--cyan); color:#063a4b; font-size: 11px; font-weight:700; padding:2px 8px; border-radius:999px; vertical-align: middle; }
+    .foot { font-size:12px; color:var(--gray-500); margin-top:18px; }
   </style>
 </head>
 <body>
   <div class="box">
-    <h2>SHIELDTECH Admin</h2>
-    <p>Redirecting to the content manager&hellip; <br>If nothing happens, <a href="admin/index.html">click here</a>.</p>
+    <h1>SHIELDTECH Admin</h1>
+    <p style="font-size:14px;margin-bottom:8px;">Choose what you want to manage:</p>
+
+    <a href="admin-inventory.html" class="opt">
+      <span class="t">Shop Inventory <span class="badge">Recommended</span></span>
+      <span class="d">Edit products, prices, and stock. Saves instantly to the live store — no site rebuild.</span>
+    </a>
+
+    <a href="admin/index.html" class="opt">
+      <span class="t">Advanced CMS</span>
+      <span class="d">Decap CMS content manager (for settings/advanced edits). Requires Netlify Identity login.</span>
+    </a>
+
+    <p class="foot">Prefer a direct link? Bookmark <strong>admin-inventory.html</strong> for daily stock updates.</p>
   </div>
 </body>
 </html>
