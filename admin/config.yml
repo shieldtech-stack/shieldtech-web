@@ -18,8 +18,8 @@ backend:
 # local_backend: true
 # local_backend_url: http://localhost:8081/api/v1
 
-media_folder: "img/uploads"
-public_folder: "/img/uploads"
+media_folder: "img/products"
+public_folder: "/img/products"
 
 site_url: "https://shieldtechweb.netlify.app"
 display_url: "https://shieldtechweb.netlify.app"
