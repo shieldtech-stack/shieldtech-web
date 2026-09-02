@@ -8,8 +8,12 @@
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
 </head>
 <body>
-  <!-- Decap CMS (Netlify CMS) content manager.
-       Requires authentication via the configured backend (Netlify Identity). -->
+  <!-- Netlify Identity widget — REQUIRED for the git-gateway login.
+       Sends Identity events to Decap CMS so the admin can authenticate
+       and save changes back to the repo. -->
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
+  <!-- Decap CMS (Netlify CMS) content manager. -->
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
   <script src="index.js"></script>
 </body>
