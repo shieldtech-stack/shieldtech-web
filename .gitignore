@@ -1,0 +1,14 @@
+# Admin-uploaded media (managed by the CMS / deployed separately if needed)
+/img/uploads/
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.log
+
+# Don't commit local-only scratch files
+*.tmp
+
+# Document that isn't part of the website (left at project root by the owner)
+/morning remedials.pdf
+*.pdf

@@ -1,0 +1,17 @@
+# Netlify settings for the SHIELDTECH static site
+# This is a no-build-step static site: publish the repo root as-is.
+
+[build]
+  publish = "."
+
+# Optional: friendly redirects so /admin always reaches the CMS entry point
+[[redirects]]
+  from = "/admin/*"
+  to = "/admin/:splat"
+  status = 200
+
+# Serve the CMS correctly as an SPA-style entry if needed
+[[redirects]]
+  from = "/admin"
+  to = "/admin/index.html"
+  status = 200

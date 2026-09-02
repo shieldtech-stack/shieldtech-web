@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accessories & Devices Shop | SHIELDTECH</title>
+  <meta name="description" content="Shop for quality tech accessories and devices at SHIELDTECH: keyboards, mice, storage devices, chargers, audio accessories, and more.">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="SHIELDTECH">
+  <meta property="og:title" content="Accessories & Devices Shop | SHIELDTECH">
+  <meta property="og:description" content="Quality tech accessories and devices: keyboards, mice, storage, chargers, audio accessories, and more.">
+  <meta property="og:locale" content="en_KE">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <header class="header">
+    <div class="header-inner">
+      <a href="index.html" class="logo" data-img-slot="logo"><span class="logo-text">SHIELD<span>TECH</span></span></a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="shop.html" class="active">Shop Accessories</a></li>
+          <li><a href="training.html">Digital Training</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </nav>
+      <a href="contact.html" class="btn btn-cyan nav-cta">Get Quote</a>
+      <button class="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <div class="mobile-menu">
+    <button class="mobile-close" aria-label="Close menu">&times;</button>
+    <a href="index.html">Home</a>
+    <a href="about.html">About Us</a>
+    <a href="services.html">Services</a>
+    <a href="shop.html">Shop Accessories</a>
+    <a href="training.html">Digital Training</a>
+    <a href="contact.html">Contact Us</a>
+    <a href="contact.html" class="btn btn-cyan">Get Quote</a>
+  </div>
+
+  <!-- Page Header -->
+  <section style="background: linear-gradient(135deg, var(--navy), #1a4a7a); padding: 120px 0 60px; text-align: center; color: var(--white);">
+    <div class="container">
+      <h1 style="color:var(--white); font-size:2.4rem;">Accessories &amp; Devices Shop</h1>
+      <p style="margin-top:12px; opacity:.85;">Quality tech accessories at affordable prices. Filter, inquire, and order easily.</p>
+    </div>
+  </section>
+
+  <!-- Shop -->
+  <section>
+    <div class="container">
+      <!-- Filters -->
+      <div class="shop-filters">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="keyboards">Keyboards & Mice</button>
+        <button class="filter-btn" data-filter="storage">Storage</button>
+        <button class="filter-btn" data-filter="power">Power & Connectivity</button>
+        <button class="filter-btn" data-filter="audio">Audio</button>
+      </div>
+
+      <!-- Product Grid (loaded from content/shop.json) -->
+      <div id="product-grid" class="cards-grid" style="grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));"></div>
+      <p id="product-status" style="text-align:center; color:var(--gray-500); padding:20px 0;"></p>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section-cyan">
+    <div class="container">
+      <h2>Looking for something specific?</h2>
+      <p style="margin-bottom:24px;">We can source and deliver it. Ask us about bulk orders and warranties.</p>
+      <a href="contact.html" class="btn btn-red">Ask About a Product</a>
+    </div>
+  </section>
+
+  <div class="contact-strip">
+    <div class="container contact-strip-inner">
+      <div class="contact-item"><div class="label">Phone</div><div class="value">+254 740 906 669</div></div>
+      <div class="contact-item"><div class="label">Email</div><div class="value">shieldtechdigi@gmail.com</div></div>
+      <div class="contact-item"><div class="label">Location</div><div class="value">Kilome Market (Opposite Main Stage), Kenya</div></div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div><a href="index.html" class="logo" data-img-slot="logo"><span class="logo-text" style="color:var(--white);">SHIELD<span style="color:var(--cyan);">TECH</span></span></a><p style="margin-top:16px;">Advanced technology solutions, printing &amp; branding, quality accessories, and digital skills training. Fast. Reliable. Professional.</p></div>
+        <div><h4>Quick Links</h4><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li><li><a href="services.html">Services</a></li><li><a href="training.html">Digital Training</a></li></ul></div>
+        <div><h4>Shop</h4><ul><li><a href="shop.html">Accessories &amp; Devices</a></li><li><a href="shop.html">Keyboards &amp; Mice</a></li><li><a href="shop.html">Storage Devices</a></li><li><a href="shop.html">Audio Accessories</a></li></ul></div>
+        <div><h4>Contact</h4><ul><li><a href="tel:+254740906669">+254 740 906 669</a></li><li><a href="mailto:shieldtechdigi@gmail.com">shieldtechdigi@gmail.com</a></li><li>Kilome Market (Opposite Main Stage), Kenya</li></ul></div>
+      </div>
+      <div class="footer-bottom"><p>&copy; 2026 SHIELDTECH Digital Solutions. All rights reserved. Fast. Reliable. Professional.</p></div>
+    </div>
+  </footer>
+
+  <a href="https://wa.me/254740906669" target="_blank" rel="noopener" class="whatsapp-float" id="whatsapp-btn" aria-label="Chat on WhatsApp"><i class="fab fa-whatsapp"></i></a>
+
+  <script src="js/images.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>

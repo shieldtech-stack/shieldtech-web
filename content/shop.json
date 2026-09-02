@@ -1,0 +1,121 @@
+{
+  "products": [
+    {
+      "name": "USB Keyboard",
+      "slug": "usb-keyboard",
+      "category": "keyboards",
+      "price": "KES 800",
+      "stock": "in-stock",
+      "description": "Ergonomic standard layout, plug and play.",
+      "image": "/img/products/prod-keyboard.jpg"
+    },
+    {
+      "name": "Wireless Mouse",
+      "slug": "wireless-mouse",
+      "category": "keyboards",
+      "price": "KES 600",
+      "stock": "in-stock",
+      "description": "Smooth wireless navigation, AA battery powered.",
+      "image": "/img/products/prod-mouse.jpg"
+    },
+    {
+      "name": "Mechanical Gaming Keyboard",
+      "slug": "mechanical-gaming-keyboard",
+      "category": "keyboards",
+      "price": "KES 3,500",
+      "stock": "in-stock",
+      "description": "RGB backlit with responsive mechanical switches.",
+      "image": "/img/products/prod-gaming.jpg"
+    },
+    {
+      "name": "USB Flash Disk 32GB",
+      "slug": "usb-flash-32gb",
+      "category": "storage",
+      "price": "KES 800",
+      "stock": "in-stock",
+      "description": "High-speed storage for documents and files.",
+      "image": "/img/products/prod-flash32.jpg"
+    },
+    {
+      "name": "USB Flash Disk 64GB",
+      "slug": "usb-flash-64gb",
+      "category": "storage",
+      "price": "KES 1,200",
+      "stock": "in-stock",
+      "description": "Ample space for presentations, projects & backups.",
+      "image": "/img/products/prod-flash64.jpg"
+    },
+    {
+      "name": "MicroSD Memory Card 64GB",
+      "slug": "microsd-64gb",
+      "category": "storage",
+      "price": "KES 1,000",
+      "stock": "in-stock",
+      "description": "Reliable storage for phones, cameras & tablets.",
+      "image": "/img/products/prod-microsd.jpg"
+    },
+    {
+      "name": "External SSD 256GB",
+      "slug": "external-ssd-256gb",
+      "category": "storage",
+      "price": "KES 6,500",
+      "stock": "out-of-stock",
+      "description": "Fast portable storage for professionals.",
+      "image": "/img/products/prod-ssd.jpg"
+    },
+    {
+      "name": "Fast Charger 25W",
+      "slug": "fast-charger-25w",
+      "category": "power",
+      "price": "KES 900",
+      "stock": "in-stock",
+      "description": "Quick charge for phones and tablets.",
+      "image": "/img/products/prod-charger.jpg"
+    },
+    {
+      "name": "Type-C Cable 2m",
+      "slug": "type-c-cable-2m",
+      "category": "power",
+      "price": "KES 400",
+      "stock": "in-stock",
+      "description": "Durable braided fast-charge data cable.",
+      "image": "/img/products/prod-usbc.jpg"
+    },
+    {
+      "name": "HDMI Cable 1.5m",
+      "slug": "hdmi-cable-1-5m",
+      "category": "power",
+      "price": "KES 500",
+      "stock": "in-stock",
+      "description": "Connect screens and projectors with crystal clarity.",
+      "image": "/img/products/prod-hdmi.jpg"
+    },
+    {
+      "name": "Over-Ear Headphones",
+      "slug": "over-ear-headphones",
+      "category": "audio",
+      "price": "KES 1,500",
+      "stock": "in-stock",
+      "description": "Comfortable wired headphones with great sound.",
+      "image": "/img/products/prod-headphones.jpg"
+    },
+    {
+      "name": "Bluetooth Earbuds",
+      "slug": "bluetooth-earbuds",
+      "category": "audio",
+      "price": "KES 2,500",
+      "stock": "in-stock",
+      "description": "Wireless earbuds with charging case.",
+      "image": "/img/products/prod-earbuds.jpg"
+    },
+    {
+      "name": "Desktop Speakers",
+      "slug": "desktop-speakers",
+      "category": "audio",
+      "price": "KES 1,800",
+      "stock": "in-stock",
+      "description": "Compact speakers for clear everyday audio.",
+      "image": "/img/products/prod-speakers.jpg"
+    }
+  ]
+}

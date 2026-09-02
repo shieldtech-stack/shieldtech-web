@@ -1,0 +1,109 @@
+============================================================
+ SHIELDTECH — IMAGE PLACEMENT GUIDE
+============================================================
+How to add your own photos so ALL visitors see them.
+
+------------------------------------------------------------
+ QUICK START (3 steps)
+------------------------------------------------------------
+1. Open this folder:   img/
+2. Prepare your photo as a .jpg (or .png for the logo).
+3. Drop it into the matching subfolder with the EXACT file
+   name listed below (overwrite the placeholder).
+
+You're done — no code changes needed. When you upload the
+img/ folder to your host (via file manager or FTP), the new
+photos appear on the live site for everyone.
+
+------------------------------------------------------------
+ IMPORTANT RULES
+------------------------------------------------------------
+- Keep the exact filename (e.g. hero-1.jpg must stay hero-1.jpg).
+- Use .jpg for photos, .png only for the logo.
+- Keep files small (under ~500KB each) so the site loads fast.
+- Landscape photos work best for banners and cards.
+- The Admin page's "Preview Override" only affects your own
+  browser — a placeholder for testing, NOT a permanent change.
+  Permanent = replace the file in this folder.
+
+------------------------------------------------------------
+ LOGO
+------------------------------------------------------------
+  File:   img/logo/logo.png
+  Size:   Recommended 600 x 300 px (transparent background)
+  Notes:  Shows in the header and footer. PNG with transparency
+
+------------------------------------------------------------
+ HOME HERO IMAGES  (large banners)
+------------------------------------------------------------
+  File:          Where it appears        Recommended size
+  img/hero/hero-1.jpg   Slide 1 — Cyber & Tech   1920 x 1080 px
+  img/hero/hero-2.jpg   Slide 2 — Printing       1920 x 1080 px
+  img/hero/hero-3.jpg   Slide 3 — Training       1920 x 1080 px
+
+------------------------------------------------------------
+ HOME CORE SERVICES  (cards)
+------------------------------------------------------------
+  File:                    Recommended size
+  img/home/home-cyber.jpg     1400 x 1050 px
+  img/home/home-printing.jpg  1400 x 1050 px
+  img/home/home-shop.jpg      1400 x 1050 px
+  img/home/home-training.jpg  1400 x 1050 px
+
+------------------------------------------------------------
+ CYBER & TECH SERVICES
+------------------------------------------------------------
+  img/cyber/svc-ecitizen.jpg   eCitizen / Gov portals   1400 x 1050 px
+  img/cyber/svc-kra.jpg        KRA & HELB filing        1400 x 1050 px
+  img/cyber/svc-hardware.jpg   Hardware repair          1400 x 1050 px
+  img/cyber/svc-networking.jpg Networking setup         1400 x 1050 px
+  img/cyber/svc-software.jpg   Software & CV            1400 x 1050 px
+
+------------------------------------------------------------
+ PRINTING & BRANDING
+------------------------------------------------------------
+  img/printing/print-doc.jpg         Doc printing & photocopy  1400 x 1050 px
+  img/printing/print-banner.jpg      Banners & posters         1400 x 1050 px
+  img/printing/print-stationery.jpg  Business stationery       1400 x 1050 px
+  img/printing/print-design.jpg      Graphic design            1400 x 1050 px
+
+------------------------------------------------------------
+ SHOP PRODUCTS  (use a clear photo of each item)
+------------------------------------------------------------
+  img/products/prod-keyboard.jpg     USB Keyboard          1200 x 900 px
+  img/products/prod-mouse.jpg        Wireless Mouse        1200 x 900 px
+  img/products/prod-gaming.jpg       Gaming Keyboard       1200 x 900 px
+  img/products/prod-flash32.jpg      Flash Disk 32GB       1200 x 900 px
+  img/products/prod-flash64.jpg      Flash Disk 64GB       1200 x 900 px
+  img/products/prod-microsd.jpg      MicroSD 64GB          1200 x 900 px
+  img/products/prod-ssd.jpg          External SSD 256GB    1200 x 900 px
+  img/products/prod-charger.jpg      Fast Charger 25W      1200 x 900 px
+  img/products/prod-usbc.jpg         Type-C Cable 2m       1200 x 900 px
+  img/products/prod-hdmi.jpg         HDMI Cable 1.5m       1200 x 900 px
+  img/products/prod-headphones.jpg   Over-Ear Headphones   1200 x 900 px
+  img/products/prod-earbuds.jpg      Bluetooth Earbuds     1200 x 900 px
+  img/products/prod-speakers.jpg     Desktop Speakers      1200 x 900 px
+
+------------------------------------------------------------
+ DIGITAL TRAINING (courses & resources)
+------------------------------------------------------------
+  img/courses/course-literacy.jpg    Computer Literacy     1400 x 1050 px
+  img/courses/course-design.jpg      Graphic Design        1400 x 1050 px
+  img/courses/course-webdev.jpg      Web Dev & AI          1400 x 1050 px
+  img/courses/res-cbc.jpg            CBC revision          1400 x 1050 px
+  img/courses/res-844.jpg            8-4-4 mock exams      1400 x 1050 px
+  img/courses/res-records.jpg        Records of Work       1400 x 1050 px
+
+------------------------------------------------------------
+ ABOUT US
+------------------------------------------------------------
+  img/about/about-company.jpg        Company image         1400 x 1050 px
+
+------------------------------------------------------------
+ TIPS
+------------------------------------------------------------
+- No photo? Leave the placeholder in place — it still looks branded.
+- Don't change file names or the site won't find the images.
+- After replacing files, hard-refresh the page (Ctrl+F5) to
+  clear the browser cache.
+============================================================
