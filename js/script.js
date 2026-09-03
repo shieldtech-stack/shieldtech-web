@@ -39,17 +39,17 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // WhatsApp float - prefill message.
-  // Keeps whatever WhatsApp number is currently configured (set by contacts.js
-  // from the live store) instead of forcing a hardcoded number.
+  // Uses the configured WhatsApp number from the live contacts store
+  // (falling back to the button's own href, then the default).
   const waBtn = document.getElementById('whatsapp-btn');
   if (waBtn) {
     waBtn.addEventListener('click', function (e) {
       e.preventDefault();
       const msg = encodeURIComponent('Hello SHIELDTECH! I would like to make an inquiry.');
-      const base = waBtn.getAttribute('href') || 'https://wa.me/254740906669';
-      const number = base.match(/wa\.me\/([0-9]+)/);
-      const target = number ? ('https://wa.me/' + number[1] + '?text=' + msg) : base;
-      window.open(target, '_blank');
+      const configured = (window.SHIELDTECH_CONTACTS || {}).whatsappNumber
+        || (waBtn.getAttribute('href').match(/wa\.me\/([0-9]+)/) || [])[1]
+        || '254740906669';
+      window.open('https://wa.me/' + configured + '?text=' + msg, '_blank');
     });
   }
 
