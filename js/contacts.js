@@ -8,7 +8,7 @@
 // from the admin page (or change content/settings.json and push to git).
 window.SHIELDTECH_CONTACTS = {
   // Bin ID created by the admin page's Contacts editor on first save.
-  binId: "",
+  binId: "6a998cdcda38895dfe345c6d",
   fallbackUrl: "content/settings.json"
 };
 
