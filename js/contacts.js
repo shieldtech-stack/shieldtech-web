@@ -47,8 +47,24 @@ window.SHIELDTECH_CONTACTS = {
         case 'whatsapp':
           if (whatsapp) el.setAttribute('href', 'https://wa.me/' + whatsapp.replace(/[^0-9]/g, ''));
           break;
+        case 'whatsapp-display':
+          if (whatsapp) {
+            el.textContent = formatWhatsApp(whatsapp);
+          }
+          break;
       }
     }
+  }
+
+  /* Format a whatsapp number for display, e.g. 254707618972 -> +254 707 618 972 */
+  function formatWhatsApp(raw) {
+    var digits = String(raw || '').replace(/[^0-9]/g, '');
+    if (!digits) return raw || '';
+    var plus = String(raw).indexOf('+') >= 0 ? '+' : '';
+    if (digits.length === 12 && digits.indexOf('254') === 0) {
+      return plus + digits.slice(0, 3) + ' ' + digits.slice(3, 6) + ' ' + digits.slice(6, 9) + ' ' + digits.slice(9);
+    }
+    return plus + digits;
   }
 
   function loadFrom(url) {
