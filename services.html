@@ -202,9 +202,9 @@
 
   <div class="contact-strip">
     <div class="container contact-strip-inner">
-      <div class="contact-item"><div class="label">Phone</div><div class="value">+254 740 906 669</div></div>
-      <div class="contact-item"><div class="label">Email</div><div class="value">shieldtechdigi@gmail.com</div></div>
-      <div class="contact-item"><div class="label">Location</div><div class="value">Kilome Market (Opposite Main Stage), Kenya</div></div>
+      <div class="contact-item"><div class="label">Phone</div><div class="value" data-contact="phone">+254 740 906 669</div></div>
+      <div class="contact-item"><div class="label">Email</div><div class="value" data-contact="email">shieldtechdigi@gmail.com</div></div>
+      <div class="contact-item"><div class="label">Location</div><div class="value" data-contact="location">Kilome Market (Opposite Main Stage), Kenya</div></div>
     </div>
   </div>
 
@@ -214,15 +214,16 @@
         <div><a href="index.html" class="logo" data-img-slot="logo"><span class="logo-text" style="color:var(--white);">SHIELD<span style="color:var(--cyan);">TECH</span></span></a><p style="margin-top:16px;">Advanced technology solutions, printing &amp; branding, quality accessories, and digital skills training. Fast. Reliable. Professional.</p></div>
         <div><h4>Quick Links</h4><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li><li><a href="services.html">Services</a></li><li><a href="training.html">Digital Training</a></li></ul></div>
         <div><h4>Shop</h4><ul><li><a href="shop.html">Accessories &amp; Devices</a></li><li><a href="shop.html">Keyboards &amp; Mice</a></li><li><a href="shop.html">Storage Devices</a></li><li><a href="shop.html">Audio Accessories</a></li></ul></div>
-        <div><h4>Contact</h4><ul><li><a href="tel:+254740906669">+254 740 906 669</a></li><li><a href="mailto:shieldtechdigi@gmail.com">shieldtechdigi@gmail.com</a></li><li>Kilome Market (Opposite Main Stage), Kenya</li></ul></div>
+        <div><h4>Contact</h4><ul><li><a href="tel:+254740906669" data-contact="phone-link">+254 740 906 669</a></li><li><a href="mailto:shieldtechdigi@gmail.com" data-contact="email-link">shieldtechdigi@gmail.com</a></li><li data-contact="location">Kilome Market (Opposite Main Stage), Kenya</li></ul></div>
       </div>
       <div class="footer-bottom"><p>&copy; 2026 SHIELDTECH Digital Solutions. All rights reserved. Fast. Reliable. Professional.</p></div>
     </div>
   </footer>
 
-  <a href="https://wa.me/254740906669" target="_blank" rel="noopener" class="whatsapp-float" id="whatsapp-btn" aria-label="Chat on WhatsApp"><i class="fab fa-whatsapp"></i></a>
+  <a href="https://wa.me/254740906669" target="_blank" rel="noopener" class="whatsapp-float" id="whatsapp-btn" data-contact="whatsapp" aria-label="Chat on WhatsApp"><i class="fab fa-whatsapp"></i></a>
 
   <script src="js/images.js"></script>
+  <script src="js/contacts.js"></script>
   <script src="js/script.js"></script>
 </body>
 </html>

@@ -80,6 +80,26 @@
          folder (listings show each file's path). Click <strong>Reset to default</strong>
          to restore the original file.</p>
       <div id="image-manager"></div>
+
+      <hr style="border:none;border-top:2px solid var(--cyan);margin:30px 0 24px;">
+
+      <h2 style="color:var(--navy);">Contact details</h2>
+      <p style="font-size:14px;max-width:760px;">Phone, WhatsApp, email and
+         location shown across every page. Saving writes to a hosted JSON store
+         and updates the live site immediately. Your JSONBin master key (above)
+         is required the first time to create the store.</p>
+      <div class="grid">
+        <div class="field"><label>Phone</label><input id="c-phone" data-c="phone"></div>
+        <div class="field"><label>WhatsApp number (digits only, e.g. 254740906669)</label><input id="c-whatsapp" data-c="whatsapp"></div>
+        <div class="field"><label>Email</label><input id="c-email" data-c="email"></div>
+        <div class="field"><label>Location</label><input id="c-location" data-c="location"></div>
+      </div>
+      <div class="row">
+        <button class="btn btn-cyan" id="contacts-save" type="button">💾 Save contact details</button>
+        <button class="btn btn-ghost" id="contacts-load" type="button">↻ Load current</button>
+      </div>
+      <div id="contact-status" class="status info hide"></div>
+      <div id="contacts-binid" class="key-box hide"></div>
     </div>
   </div>
 
@@ -251,6 +271,110 @@
         showStatus('Save failed: ' + e.message, 'err');
       });
     });
+
+    // ---- Contact details editor ----
+    var CONTACTS_KEY = 'shieldtech_contacts_bin';
+    var contactStatus = document.getElementById('contact-status');
+    var contactBinBox = document.getElementById('contacts-binid');
+    var contactsSave = document.getElementById('contacts-save');
+    var contactsLoad = document.getElementById('contacts-load');
+
+    function cShow(msg, type) {
+      contactStatus.textContent = msg;
+      contactStatus.className = 'status ' + (type || 'info');
+      contactStatus.classList.remove('hide');
+    }
+    function cHide() { contactStatus.classList.add('hide'); }
+
+    function contactsBinId() {
+      try { return localStorage.getItem(CONTACTS_KEY) || ''; } catch (e) { return ''; }
+    }
+    function setContactsBinId(id) {
+      try { localStorage.setItem(CONTACTS_KEY, id); } catch (e) {}
+    }
+
+    function currentContacts() {
+      return {
+        phone: document.getElementById('c-phone').value.trim(),
+        whatsapp: document.getElementById('c-whatsapp').value.trim(),
+        email: document.getElementById('c-email').value.trim(),
+        location: document.getElementById('c-location').value.trim()
+      };
+    }
+    function fillContacts(c) {
+      document.getElementById('c-phone').value = c.phone || '';
+      document.getElementById('c-whatsapp').value = c.whatsapp || '';
+      document.getElementById('c-email').value = c.email || '';
+      document.getElementById('c-location').value = c.location || '';
+    }
+
+    // Load current values (from the live bin if known, else bundled settings).
+    function loadContacts() {
+      var bin = contactsBinId();
+      var url = bin ? ('https://api.jsonbin.io/v3/b/' + bin + '/latest') : 'content/settings.json';
+      fetch(url)
+        .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+        .then(function (data) {
+          var record = data.record || data;
+          fillContacts(record);
+          cShow('Loaded contact details.', 'ok');
+        })
+        .catch(function () {
+          cShow('Could not load contacts.', 'err');
+        });
+    }
+    contactsLoad.addEventListener('click', loadContacts);
+
+    contactsSave.addEventListener('click', function () {
+      var key = masterKey.value.trim();
+      if (!key) { cShow('Enter your JSONBin master key (top of the page) to save contacts.', 'err'); return; }
+
+      var payload = currentContacts();
+      var bin = contactsBinId();
+
+      var hdrs = new Headers({
+        'Content-Type': 'application/json',
+        'X-Master-Key': key
+      });
+
+      var url, method;
+      if (bin) {
+        url = 'https://api.jsonbin.io/v3/b/' + bin;
+        method = 'PUT';
+      } else {
+        // First save: create the public bin, then use its new ID.
+        url = 'https://api.jsonbin.io/v3/b';
+        method = 'POST';
+        hdrs.append('X-Bin-Private', 'false');
+        hdrs.append('X-Bin-Name', 'shieldtech-contacts');
+      }
+
+      cShow('Saving…', 'info');
+      fetch(url, { method: method, headers: hdrs, body: JSON.stringify(payload) })
+        .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status + ' — check your key.'); return r.json(); })
+        .then(function (res) {
+          if (!bin) {
+            var id = ((res || {}).metadata || {}).id || '';
+            if (id) setContactsBinId(id);
+            var cfg = window.SHIELDTECH_CONTACTS || {};
+            if (id && !cfg.binId) {
+              cfg.binId = id;
+              contactBinBox.innerHTML = 'Contacts store created. Add this Bin ID to <code>js/contacts.js</code> ' +
+                '(<code>window.SHIELDTECH_CONTACTS = { binId: "' + id + '" }</code>) so ALL visitors load it. ' +
+                'Until then it is saved in this browser only: <input readonly value="' + id + '">';
+              contactBinBox.classList.remove('hide');
+            }
+          }
+          cShow('Saved successfully. Visitors will see updates immediately.', 'ok');
+        })
+        .catch(function (e) {
+          cShow('Save failed: ' + e.message, 'err');
+        });
+    });
+
+    // Pre-populate the contacts form once the page is unlocked.
+    var origUnlock = unlock;
+    unlock = function () { origUnlock(); loadContacts(); };
   })();
   </script>
 </body>
