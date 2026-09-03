@@ -126,22 +126,27 @@ document.addEventListener('DOMContentLoaded', function () {
       if (status) status.textContent = '';
     }
 
+    function showError() {
+      if (status) status.textContent = 'Unable to load products. Please check back shortly.';
+    }
+    function tryLocal() {
+      return loadFrom((window.SHIELDTECH_DATA || {}).fallbackUrl || 'content/shop.json')
+        .then(function (list) {
+          if (list && list.length) { renderAll(list); } else { showError(); }
+        })
+        .catch(showError);
+    }
+
     if (binUrl) {
       loadFrom(binUrl)
-        .then(renderAll)
-        .catch(function () {
-          return loadFrom((window.SHIELDTECH_DATA || {}).fallbackUrl || 'content/shop.json')
-            .then(renderAll)
-            .catch(function () {
-              if (status) status.textContent = 'Unable to load products. Please check back shortly.';
-            });
-        });
+        .then(function (list) {
+          // If the live store returns nothing (e.g. opened from file://),
+          // fall back to the bundled local JSON so the shop is never blank.
+          if (list && list.length) { renderAll(list); } else { return tryLocal(); }
+        })
+        .catch(tryLocal);
     } else {
-      loadFrom((window.SHIELDTECH_DATA || {}).fallbackUrl || 'content/shop.json')
-        .then(renderAll)
-        .catch(function () {
-          if (status) status.textContent = 'Unable to load products. Please check back shortly.';
-        });
+      tryLocal();
     }
 
     function renderProducts(filter) {
