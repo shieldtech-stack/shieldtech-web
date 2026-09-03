@@ -60,6 +60,10 @@ window.SHIELDTECH_CONTACTS = {
         whatsapp = record.whatsapp || null;
         email = record.email || null;
         location = record.location || null;
+        // Expose the digits-only number for other scripts (order links, forms).
+        if (whatsapp) {
+          try { window.SHIELDTECH_CONTACTS.whatsappNumber = String(whatsapp).replace(/[^0-9]/g, ''); } catch (e) {}
+        }
         apply();
       })
       .catch(function () { /* keep hardcoded defaults */ });

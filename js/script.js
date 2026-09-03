@@ -38,19 +38,29 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // WhatsApp float - prefill message
+  // WhatsApp float - prefill message.
+  // Keeps whatever WhatsApp number is currently configured (set by contacts.js
+  // from the live store) instead of forcing a hardcoded number.
   const waBtn = document.getElementById('whatsapp-btn');
   if (waBtn) {
-    waBtn.addEventListener('click', function () {
+    waBtn.addEventListener('click', function (e) {
+      e.preventDefault();
       const msg = encodeURIComponent('Hello SHIELDTECH! I would like to make an inquiry.');
-      waBtn.href = 'https://wa.me/254740906669?text=' + msg;
+      const base = waBtn.getAttribute('href') || 'https://wa.me/254740906669';
+      const number = base.match(/wa\.me\/([0-9]+)/);
+      const target = number ? ('https://wa.me/' + number[1] + '?text=' + msg) : base;
+      window.open(target, '_blank');
     });
   }
+
+  // WhatsApp number configured in the live contacts store (digits only).
+  const CONTACT_NUM = () =>
+    ((window.SHIELDTECH_CONTACTS || {}).whatsappNumber) || '254740906669';
 
   // Shop — load products from content/shop.json and render dynamically.
   const productGrid = document.getElementById('product-grid');
   if (productGrid) {
-    const PRODUCT = 'https://wa.me/254740906669?text=';
+    const PRODUCT = () => 'https://wa.me/' + CONTACT_NUM() + '?text=';
 
     function buildCard(p) {
       const card = document.createElement('div');
@@ -87,7 +97,7 @@ document.addEventListener('DOMContentLoaded', function () {
           'Price: ' + (p.price || '') + '\n\n' +
           'Name:\nPhone:'
         );
-        window.open(PRODUCT + msg, '_blank');
+        window.open(PRODUCT() + msg, '_blank');
       });
 
       return card;
@@ -212,7 +222,7 @@ document.addEventListener('DOMContentLoaded', function () {
       );
 
       // Open WhatsApp so the lead is actually delivered to the business.
-      window.open('https://wa.me/254740906669?text=' + whatsappMsg, '_blank');
+      window.open('https://wa.me/' + CONTACT_NUM() + '?text=' + whatsappMsg, '_blank');
 
       btn.innerHTML = '✓ Opening WhatsApp...';
       setTimeout(function () {
