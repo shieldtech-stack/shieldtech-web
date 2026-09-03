@@ -69,10 +69,23 @@
       </div>
 
       <div id="list"></div>
+
+      <hr style="border:none;border-top:2px solid var(--cyan);margin:30px 0 24px;">
+
+      <h2 style="color:var(--navy);">Images for all pages</h2>
+      <p style="font-size:14px;max-width:760px;">Replace the photos used on the
+         home, services, shop, training and about pages. Uploads below create a
+         <strong>preview override saved in this browser</strong>. To make a change
+         every visitor sees, replace the matching file under the <code>img/</code>
+         folder (listings show each file's path). Click <strong>Reset to default</strong>
+         to restore the original file.</p>
+      <div id="image-manager"></div>
     </div>
   </div>
 
   <script src="js/shop-data.js"></script>
+  <script src="js/images.js"></script>
+  <script src="js/script.js"></script>
   <script>
   (function () {
     var cfg = window.SHIELDTECH_DATA || {};
@@ -211,12 +224,18 @@
       var payload = { products: products.filter(function (p) { return (p.name || '').trim() !== ''; }) };
 
       showStatus('Saving…', 'info');
+
+      // Build a Headers object so the (base64) master key is sent correctly.
+      // Passing the key inside a plain object literal can throw
+      // "String contains non ISO-8859-1 code point" on fetch.
+      var hdrs = new Headers({
+        'Content-Type': 'application/json',
+        'X-Master-Key': key
+      });
+
       fetch('https://api.jsonbin.io/v3/b/' + BIN_ID, {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Master-Key': key
-        },
+        headers: hdrs,
         body: JSON.stringify(payload)
       })
       .then(function (r) {
