@@ -99,6 +99,13 @@ document.addEventListener('DOMContentLoaded', function () {
       return escapeHtml(s);
     }
 
+    // Resolve a product image to an actual URL. Always returns something
+    // truthy so product cards always render with a background image.
+    function resolveImg(src) {
+      if (src) return src;
+      return 'img/home/home-shop.jpg';
+    }
+
     let allProducts = [];
     const status = document.getElementById('product-status');
 
