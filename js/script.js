@@ -60,7 +60,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
       const stock = p.stock === 'out-of-stock' ? 'out-of-stock' : 'in-stock';
       const stockLabel = p.stock === 'out-of-stock' ? 'Out of Stock' : 'In Stock';
-      const imgStyle = p.image ? ' style="background-image:url(\'' + p.image + '\');background-size:cover;background-position:center;"' : '';
+      const resolvedImg = resolveImg(p.image);
+      const imgStyle = resolvedImg ? ' style="background-image:url(\'' + resolvedImg + '\');background-size:cover;background-position:center;"' : '';
       const listedPrice = p.price || '';
 
       card.innerHTML =
