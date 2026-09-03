@@ -99,10 +99,17 @@ document.addEventListener('DOMContentLoaded', function () {
       return escapeHtml(s);
     }
 
-    // Resolve a product image to an actual URL. Always returns something
-    // truthy so product cards always render with a background image.
+    // Resolve a product image to an actual URL that works under a GitHub
+    // Pages project sub-path (e.g. /shieldtech-web/). The live JSONBin store
+    // stores absolute paths like "/img/products/..." which would resolve to
+    // the domain root and 404, so normalize them to relative paths here.
+    // Always returns something truthy so cards always render.
     function resolveImg(src) {
-      if (src) return src;
+      if (src) {
+        // Strip any leading slash so "/img/..." becomes "img/..." relative.
+        var normalized = src.replace(/^\/+/, '');
+        return normalized;
+      }
       return 'img/home/home-shop.jpg';
     }
 
