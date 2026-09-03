@@ -64,8 +64,9 @@ document.addEventListener('DOMContentLoaded', function () {
       const imgStyle = resolvedImg ? ' style="background-image:url(\'' + resolvedImg + '\');background-size:cover;background-position:center;"' : '';
       const listedPrice = p.price || '';
 
+      const iconHtml = resolvedImg ? '' : '<i class="fas fa-box-open"></i>';
       card.innerHTML =
-        '<div class="card-img"' + imgStyle + '><i class="fas fa-box-open"></i></div>' +
+        '<div class="card-img"' + imgStyle + '>' + iconHtml + '</div>' +
         '<div class="card-body">' +
           '<h3>' + escapeHtml(p.name || '') + '</h3>' +
           '<p style="margin-bottom:8px;">' + escapeHtml(p.description || '') + '</p>' +
